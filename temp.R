@@ -72,3 +72,5 @@ temp = read_data_from_hana(mall_p_flow_sql)
 community_data_sample = community_data_focus[,.SD[1:10,],by = "city"]
 community_data_sample = community_data_focus[pricesection > 0,.SD[sample(nrow(.SD),10),],by = "city"]
 community_data_sample = community_data_sample[,c("city","name","pricesection")]
+
+##This time we add some content for testing git
