@@ -1,3 +1,6 @@
+library(rvest)
+library(magrittr)
+
 temp = list()
 temp1 = list() 
 temp2 = list()
@@ -74,3 +77,15 @@ community_data_sample = community_data_focus[pricesection > 0,.SD[sample(nrow(.S
 community_data_sample = community_data_sample[,c("city","name","pricesection")]
 
 ##This time we add some content for testing git
+city_gdp_url = "https://wenku.baidu.com/view/b97475622f3f5727a5e9856a561252d380eb2021.html"
+city_gdp_page = read_html(city_gdp_url)
+city_gdp = city_gdp_page %>% html_nodes('div.reader-pic-item') %>% html_text()
+
+city_gdp_url = "http://www.sohu.com/a/219596742_683734"
+city_gdp_page = read_html(city_gdp_url)
+city_gdp = city_gdp_page %>% html_nodes('article#mp-editor p') %>% html_text()
+city_gdp = city_gdp[str_detect(city_gdp,"^[\\d]{1,2}\\.")]
+gdp = str_extract(city_gdp,"\\d+(?=亿元)")
+population = str_extract(city_gdp,"\\d+(?=万)")
+increasing_rate = str_extract(city_gdp,"\\d+(\\.)?\\d*(?=%)")
+name = str_extract(city_gdp,"(?<=\\d\\.)[^a-z]+?(?=(\\d){2})")
